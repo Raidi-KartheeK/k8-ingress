@@ -3,7 +3,7 @@
 ```
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
-    --cluster expense \
+    --cluster expense-1 \
     --approve
 ```
 
@@ -19,7 +19,7 @@ aws iam create-policy \
 
 ```
 eksctl create iamserviceaccount \
---cluster=expense \
+--cluster=expense-1 \
 --namespace=kube-system \
 --name=aws-load-balancer-controller \
 --attach-policy-arn=arn:aws:iam::983015583980:policy/AWSLoadBalancerControllerIAMPolicy \
@@ -30,6 +30,7 @@ eksctl create iamserviceaccount \
 
 ```
 helm repo add eks https://aws.github.io/eks-charts
+
 ```
 
 ```
