@@ -47,7 +47,7 @@ metadata:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:983015583980:certificate/219c4d57-3e07-4e63-9793-b0a9bfab5621
       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
-      alb.ingress.kubernetes.io/group.name: expense
+      alb.ingress.kubernetes.io/group.name: expense-1
 spec:
     ingressClassName: alb
     rules:
