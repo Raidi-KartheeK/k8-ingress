@@ -3,7 +3,7 @@
 ```
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
-    --cluster expense-1 \
+    --cluster expense \
     --approve
 ```
 
@@ -19,7 +19,7 @@ aws iam create-policy \
 
 ```
 eksctl create iamserviceaccount \
---cluster=expense-1 \
+--cluster=expense \
 --namespace=kube-system \
 --name=aws-load-balancer-controller \
 --attach-policy-arn=arn:aws:iam::983015583980:policy/AWSLoadBalancerControllerIAMPolicy \
