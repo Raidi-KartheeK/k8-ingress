@@ -60,4 +60,3 @@ spec:
               name: app1
               port:
                 number: 80
----
