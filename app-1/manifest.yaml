@@ -47,6 +47,10 @@ metadata:
       alb.ingress.kubernetes.io/listen-ports: '[ {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
       alb.ingress.kubernetes.io/group.name: expense
+      # if someone tries to rech the app over http, redirect to https
+      #alb.ingress.kubernetes.io/force-ssl-redirection: 'true'
+      #alb.ingress.kubernetes.io/limit-connections : '8'
+      #alb.ingress.kubernetes.io/limit-rpm : '60'
 spec:
     ingressClassName: alb
     rules:
@@ -60,3 +64,37 @@ spec:
               name: app1
               port:
                 number: 80
+
+
+
+#wildcard dns domains
+# A wildcard DNS record (*.aws-dev-rk.online) pointing to the ALB's DNS name should be created in your DNS provider to access the services using subdomains.
+# *.domain.com
+#app1.domain.com --> ALB DNS
+#app2.domain.com --> ALB DNS
+#app3.domain.com --> ALB DNS
+# This is especially useful in development and testing environments where multiple services need to be accessed without creating individual DNS records for each service.
+
+#Rate Limiting 
+#you can limit controls how many requests a cilent can send to your srvice within a specific time frame.
+#
+
+#cors Handling
+#CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to restrict web pages from making requests to a different domain than the one that served the web page.
+# by configuring CORS settings on the ALB, you can control which domains are allowed to access your services, what HTTP methods are permitted, and which headers can be included in the requests.
+
+
+#q/a
+#Q: even after creating your ingress traffic might not flow as expected. what could be the possible reasons?
+#A: if the controller isnt running you might see something 
+ # kubectl get pods -n ingress-nginx
+ #in case k8 cannont route requests because there no controler to handle the ingress rules
+ #
+#Q: DNS or host resolution problems if the host defined in your defined in your ingress does nt match the host in the request,traffic will not reach your service.
+#A: check the ingress controller external ip to ensure your dns or /etc/hosts points t it
+# this ensure that dns records or your /etc/hosts file points the host like (aap1.domain.com)to the ingress controller external ip
+
+#3Q: sometimes path rewrites dont work as expected  , this usually happend when the rewrite target is missing or the regex in you path is incrorrect
+#A: if the annotation for rewrite target is missing or incorrect the ingress controller will not be able to rewrite the path as intended
+# kubectl describe ingress app1-ingress | grep -i rewrite-target
+# double check that your annotation is correct and matches your paths defined in the ingress so that requests correctly before reaching the backend service
